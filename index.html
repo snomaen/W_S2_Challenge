@@ -5,28 +5,105 @@
   <title>Web Sprint 2 Challenge</title>
   <script id="challenge">
     // 👉 CHALLENGE 1
-    function profileActivation(profile, reason) {
+  function profileActivation (profile, reason) {
+      if (profile.active && !reason) {
+        return "confirm status manually";
+      }
 
-    }
+      if (profile.active) {
+        profile.active = false;
+        profile.reason = reason;
+        return profile;
+      } 
+      
+      if (!profile.active){
+      profile.active = true;
+      delete profile.reason;
+      return profile;
+        }
+}
+
+let testProfile1 = {
+  active: false,
+  reason: undefined
+};
+let result1 = profileActivation(testProfile1);
+console.log(result1);  
+
+let testProfile2 = {
+  active: true,
+  reason: undefined
+};
+let result2 = profileActivation(testProfile2, "Not logged in for 30 days");
+console.log(result2);  
+
+let testProfile3 = {
+  active: true,
+  reason: undefined
+};
+let result3 = profileActivation(testProfile3);
+console.log(result3);  
+
 
     // 👉 CHALLENGE 2
     function mineSweeper(grid, x, y) {
+      if (x < 1 || x > 3 || y < 1 || y > 3) {
+        return "invalid coordinates";
+      }
+      let adjustX = x - 1;
+      let adjustY = y - 1;
+
+      let cell = grid[adjustY][adjustX];
+
+      if (cell === "🟥") {
+        return "🟥 💀";
+      } else if (cell === "🟦" ){
+        return "🟦 🥳";
+      }
 
     }
 
     // 👉 CHALLENGE 3
     function booleanize(obj) {
+      for (let key in obj) {
+        if (key.length > 9) {
+            return "shorten all prop names to 9 chars or less";
+        }
+    }
+    for (let key in obj) {
+        if (obj[key] === null) {
+            delete obj[key]; 
+        } else if (obj[key] === 0) {
+            obj[key] = false;   
+        } else if (obj[key] === 1) {
+             obj[key] = true;   
+        }
+    }
+
+    return obj;
 
     }
 
     // 👉 CHALLENGE 4
     function scrub(text, forbidden) {
+  let words = text.split(" ");
 
+  for (let i = 0; i < words.length; i++) {
+
+    if (forbidden.includes(words[i])) {
+      words[i] = "x".repeat(words[i].length);
     }
+  }
+  return words.join(" ");
+  }
 
     // 👉 CHALLENGE 5 (bonus, NOT graded)
     function normalizePhoneNumber(num) {
+      let areaCode = num.slice(0, 3);
+      let prefix = num.slice(3,6);
+      let lineNumber = num.slice(6);
 
+      return `(${areaCode}) ${prefix}-${lineNumber}`;
     }
 
     // 👉 CHALLENGE 6 (bonus, NOT graded)
